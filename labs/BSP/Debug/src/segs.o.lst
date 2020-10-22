@@ -1,0 +1,230 @@
+   1              		.cpu arm7tdmi
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 18, 4
+  11              		.file	"segs.c"
+  21              	.Ltext0:
+  22              		.file 1 "../src/segs.c"
+ 1888              		.align	2
+ 1891              	hex2segs:
+ 1892 0000 12       		.byte	18
+ 1893 0001 9F       		.byte	-97
+ 1894 0002 31       		.byte	49
+ 1895 0003 15       		.byte	21
+ 1896 0004 9C       		.byte	-100
+ 1897 0005 54       		.byte	84
+ 1898 0006 50       		.byte	80
+ 1899 0007 1F       		.byte	31
+ 1900 0008 10       		.byte	16
+ 1901 0009 14       		.byte	20
+ 1902 000a 18       		.byte	24
+ 1903 000b D0       		.byte	-48
+ 1904 000c 72       		.byte	114
+ 1905 000d 91       		.byte	-111
+ 1906 000e 70       		.byte	112
+ 1907 000f 78       		.byte	120
+ 1908              		.bss
+ 1909              	state:
+ 1910 0000 00       		.space	1
+ 1911              		.text
+ 1912              		.align	2
+ 1913              		.global	segs_init
+ 1915              	segs_init:
+ 1916              	.LFB0:
+   1:../src/segs.c **** 
+   2:../src/segs.c **** #include <s3c44b0x.h>
+   3:../src/segs.c **** #include <s3cev40.h>
+   4:../src/segs.c **** #include <segs.h>
+   5:../src/segs.c **** 
+   6:../src/segs.c **** //									0	1	  2		3	4		5	6	7	8		9	A	b	c	d		e	f
+   7:../src/segs.c **** static const uint8 hex2segs[16] = {0x12,0x9F,0x31,0x15,0x9C,0x54,0x50,0x1F,0x10,0x14,0x18,0xD0,0x72
+   8:../src/segs.c **** 
+   9:../src/segs.c **** static uint8 state;
+  10:../src/segs.c ****         
+  11:../src/segs.c **** void segs_init( void )
+  12:../src/segs.c **** {
+ 1917              		.loc 1 12 0
+ 1918              		.cfi_startproc
+ 1919              		@ Function supports interworking.
+ 1920              		@ args = 0, pretend = 0, frame = 0
+ 1921              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1922 0000 0DC0A0E1 		mov	ip, sp
+ 1923              	.LCFI0:
+ 1924              		.cfi_def_cfa_register 12
+ 1925 0004 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 1926 0008 04B04CE2 		sub	fp, ip, #4
+ 1927              		.cfi_offset 14, -8
+ 1928              		.cfi_offset 13, -12
+ 1929              		.cfi_offset 11, -16
+ 1930              	.LCFI1:
+ 1931              		.cfi_def_cfa 11, 4
+  13:../src/segs.c ****     segs_off();
+ 1932              		.loc 1 13 0
+ 1933 000c FEFFFFEB 		bl	segs_off
+  14:../src/segs.c **** }                                  
+ 1934              		.loc 1 14 0
+ 1935 0010 0CD04BE2 		sub	sp, fp, #12
+ 1936 0014 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 1937 0018 1EFF2FE1 		bx	lr
+ 1938              		.cfi_endproc
+ 1939              	.LFE0:
+ 1941              		.align	2
+ 1942              		.global	segs_off
+ 1944              	segs_off:
+ 1945              	.LFB1:
+  15:../src/segs.c ****                           
+  16:../src/segs.c **** void segs_off( void )
+  17:../src/segs.c **** {
+ 1946              		.loc 1 17 0
+ 1947              		.cfi_startproc
+ 1948              		@ Function supports interworking.
+ 1949              		@ args = 0, pretend = 0, frame = 0
+ 1950              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1951 001c 0DC0A0E1 		mov	ip, sp
+ 1952              	.LCFI2:
+ 1953              		.cfi_def_cfa_register 12
+ 1954 0020 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 1955 0024 04B04CE2 		sub	fp, ip, #4
+ 1956              		.cfi_offset 14, -8
+ 1957              		.cfi_offset 13, -12
+ 1958              		.cfi_offset 11, -16
+ 1959              	.LCFI3:
+ 1960              		.cfi_def_cfa 11, 4
+  18:../src/segs.c ****     state = SEGS_OFF;
+ 1961              		.loc 1 18 0
+ 1962 0028 20309FE5 		ldr	r3, .L3
+ 1963 002c 0020E0E3 		mvn	r2, #0
+ 1964 0030 0020C3E5 		strb	r2, [r3, #0]
+  19:../src/segs.c ****     SEGS = state;
+ 1965              		.loc 1 19 0
+ 1966 0034 8537A0E3 		mov	r3, #34865152
+ 1967 0038 10209FE5 		ldr	r2, .L3
+ 1968 003c 0020D2E5 		ldrb	r2, [r2, #0]	@ zero_extendqisi2
+ 1969 0040 0020C3E5 		strb	r2, [r3, #0]
+  20:../src/segs.c **** }
+ 1970              		.loc 1 20 0
+ 1971 0044 0CD04BE2 		sub	sp, fp, #12
+ 1972 0048 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 1973 004c 1EFF2FE1 		bx	lr
+ 1974              	.L4:
+ 1975              		.align	2
+ 1976              	.L3:
+ 1977 0050 00000000 		.word	state
+ 1978              		.cfi_endproc
+ 1979              	.LFE1:
+ 1981              		.align	2
+ 1982              		.global	segs_putchar
+ 1984              	segs_putchar:
+ 1985              	.LFB2:
+  21:../src/segs.c **** 
+  22:../src/segs.c **** void segs_putchar( uint8 n )
+  23:../src/segs.c **** {
+ 1986              		.loc 1 23 0
+ 1987              		.cfi_startproc
+ 1988              		@ Function supports interworking.
+ 1989              		@ args = 0, pretend = 0, frame = 8
+ 1990              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1991 0054 0DC0A0E1 		mov	ip, sp
+ 1992              	.LCFI4:
+ 1993              		.cfi_def_cfa_register 12
+ 1994 0058 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 1995 005c 04B04CE2 		sub	fp, ip, #4
+ 1996              		.cfi_offset 14, -8
+ 1997              		.cfi_offset 13, -12
+ 1998              		.cfi_offset 11, -16
+ 1999              	.LCFI5:
+ 2000              		.cfi_def_cfa 11, 4
+ 2001 0060 08D04DE2 		sub	sp, sp, #8
+ 2002 0064 0030A0E1 		mov	r3, r0
+ 2003 0068 0D304BE5 		strb	r3, [fp, #-13]
+  24:../src/segs.c ****     state = n & 0x0f;
+ 2004              		.loc 1 24 0
+ 2005 006c 0D305BE5 		ldrb	r3, [fp, #-13]
+ 2006 0070 0F3003E2 		and	r3, r3, #15
+ 2007 0074 FF2003E2 		and	r2, r3, #255
+ 2008 0078 24309FE5 		ldr	r3, .L6
+ 2009 007c 0020C3E5 		strb	r2, [r3, #0]
+  25:../src/segs.c ****     SEGS = hex2segs[state];
+ 2010              		.loc 1 25 0
+ 2011 0080 8537A0E3 		mov	r3, #34865152
+ 2012 0084 18209FE5 		ldr	r2, .L6
+ 2013 0088 0020D2E5 		ldrb	r2, [r2, #0]	@ zero_extendqisi2
+ 2014 008c 14109FE5 		ldr	r1, .L6+4
+ 2015 0090 0220D1E7 		ldrb	r2, [r1, r2]	@ zero_extendqisi2
+ 2016 0094 0020C3E5 		strb	r2, [r3, #0]
+  26:../src/segs.c **** };
+ 2017              		.loc 1 26 0
+ 2018 0098 0CD04BE2 		sub	sp, fp, #12
+ 2019 009c 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 2020 00a0 1EFF2FE1 		bx	lr
+ 2021              	.L7:
+ 2022              		.align	2
+ 2023              	.L6:
+ 2024 00a4 00000000 		.word	state
+ 2025 00a8 00000000 		.word	hex2segs
+ 2026              		.cfi_endproc
+ 2027              	.LFE2:
+ 2029              		.align	2
+ 2030              		.global	segs_status
+ 2032              	segs_status:
+ 2033              	.LFB3:
+  27:../src/segs.c **** 
+  28:../src/segs.c **** uint8 segs_status( void )
+  29:../src/segs.c **** {
+ 2034              		.loc 1 29 0
+ 2035              		.cfi_startproc
+ 2036              		@ Function supports interworking.
+ 2037              		@ args = 0, pretend = 0, frame = 0
+ 2038              		@ frame_needed = 1, uses_anonymous_args = 0
+ 2039 00ac 0DC0A0E1 		mov	ip, sp
+ 2040              	.LCFI6:
+ 2041              		.cfi_def_cfa_register 12
+ 2042 00b0 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 2043 00b4 04B04CE2 		sub	fp, ip, #4
+ 2044              		.cfi_offset 14, -8
+ 2045              		.cfi_offset 13, -12
+ 2046              		.cfi_offset 11, -16
+ 2047              	.LCFI7:
+ 2048              		.cfi_def_cfa 11, 4
+  30:../src/segs.c ****     return state;
+ 2049              		.loc 1 30 0
+ 2050 00b8 10309FE5 		ldr	r3, .L9
+ 2051 00bc 0030D3E5 		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+  31:../src/segs.c **** };
+ 2052              		.loc 1 31 0
+ 2053 00c0 0300A0E1 		mov	r0, r3
+ 2054 00c4 0CD04BE2 		sub	sp, fp, #12
+ 2055 00c8 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 2056 00cc 1EFF2FE1 		bx	lr
+ 2057              	.L10:
+ 2058              		.align	2
+ 2059              	.L9:
+ 2060 00d0 00000000 		.word	state
+ 2061              		.cfi_endproc
+ 2062              	.LFE3:
+ 2064              	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 segs.c
+C:\Users\USUARI~1\AppData\Local\Temp\ccCjwBoa.s:1888   .rodata:00000000 $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccCjwBoa.s:1891   .rodata:00000000 hex2segs
+C:\Users\USUARI~1\AppData\Local\Temp\ccCjwBoa.s:1909   .bss:00000000 state
+C:\Users\USUARI~1\AppData\Local\Temp\ccCjwBoa.s:1910   .bss:00000000 $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccCjwBoa.s:1912   .text:00000000 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccCjwBoa.s:1915   .text:00000000 segs_init
+C:\Users\USUARI~1\AppData\Local\Temp\ccCjwBoa.s:1944   .text:0000001c segs_off
+C:\Users\USUARI~1\AppData\Local\Temp\ccCjwBoa.s:1977   .text:00000050 $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccCjwBoa.s:1981   .text:00000054 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccCjwBoa.s:1984   .text:00000054 segs_putchar
+C:\Users\USUARI~1\AppData\Local\Temp\ccCjwBoa.s:2024   .text:000000a4 $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccCjwBoa.s:2029   .text:000000ac $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccCjwBoa.s:2032   .text:000000ac segs_status
+C:\Users\USUARI~1\AppData\Local\Temp\ccCjwBoa.s:2060   .text:000000d0 $d
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS

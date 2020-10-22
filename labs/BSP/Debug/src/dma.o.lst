@@ -1,0 +1,192 @@
+   1              		.cpu arm7tdmi
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 18, 4
+  11              		.file	"dma.c"
+  21              	.Ltext0:
+  22              		.file 1 "../src/dma.c"
+ 1885              		.align	2
+ 1886              		.global	bdma0_init
+ 1888              	bdma0_init:
+ 1889              	.LFB0:
+   1:../src/dma.c  **** 
+   2:../src/dma.c  **** #include <s3c44b0x.h>
+   3:../src/dma.c  **** #include <s3cev40.h>
+   4:../src/dma.c  **** #include <dma.h>
+   5:../src/dma.c  **** 
+   6:../src/dma.c  **** extern void isr_BDMA0_dummy( void ); 
+   7:../src/dma.c  **** 
+   8:../src/dma.c  **** void bdma0_init( void )
+   9:../src/dma.c  **** {
+ 1890              		.loc 1 9 0
+ 1891              		.cfi_startproc
+ 1892              		@ Function supports interworking.
+ 1893              		@ args = 0, pretend = 0, frame = 0
+ 1894              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1895 0000 0DC0A0E1 		mov	ip, sp
+ 1896              	.LCFI0:
+ 1897              		.cfi_def_cfa_register 12
+ 1898 0004 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 1899 0008 04B04CE2 		sub	fp, ip, #4
+ 1900              		.cfi_offset 14, -8
+ 1901              		.cfi_offset 13, -12
+ 1902              		.cfi_offset 11, -16
+ 1903              	.LCFI1:
+ 1904              		.cfi_def_cfa 11, 4
+  10:../src/dma.c  ****     BDCON0  = 0;
+ 1905              		.loc 1 10 0
+ 1906 000c 7E37A0E3 		mov	r3, #33030144
+ 1907 0010 0020A0E3 		mov	r2, #0
+ 1908 0014 002083E5 		str	r2, [r3, #0]
+  11:../src/dma.c  ****     BDISRC0 = 0;
+ 1909              		.loc 1 11 0
+ 1910 0018 28309FE5 		ldr	r3, .L2
+ 1911 001c 0020A0E3 		mov	r2, #0
+ 1912 0020 002083E5 		str	r2, [r3, #0]
+  12:../src/dma.c  ****     BDIDES0 = 0;
+ 1913              		.loc 1 12 0
+ 1914 0024 20309FE5 		ldr	r3, .L2+4
+ 1915 0028 0020A0E3 		mov	r2, #0
+ 1916 002c 002083E5 		str	r2, [r3, #0]
+  13:../src/dma.c  ****     BDICNT0 = 0;
+ 1917              		.loc 1 13 0
+ 1918 0030 18309FE5 		ldr	r3, .L2+8
+ 1919 0034 0020A0E3 		mov	r2, #0
+ 1920 0038 002083E5 		str	r2, [r3, #0]
+  14:../src/dma.c  **** }
+ 1921              		.loc 1 14 0
+ 1922 003c 0CD04BE2 		sub	sp, fp, #12
+ 1923 0040 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 1924 0044 1EFF2FE1 		bx	lr
+ 1925              	.L3:
+ 1926              		.align	2
+ 1927              	.L2:
+ 1928 0048 0400F801 		.word	33030148
+ 1929 004c 0800F801 		.word	33030152
+ 1930 0050 0C00F801 		.word	33030156
+ 1931              		.cfi_endproc
+ 1932              	.LFE0:
+ 1934              		.align	2
+ 1935              		.global	bdma0_open
+ 1937              	bdma0_open:
+ 1938              	.LFB1:
+  15:../src/dma.c  **** 
+  16:../src/dma.c  **** void bdma0_open( void (*isr)(void) )
+  17:../src/dma.c  **** {
+ 1939              		.loc 1 17 0
+ 1940              		.cfi_startproc
+ 1941              		@ Function supports interworking.
+ 1942              		@ args = 0, pretend = 0, frame = 8
+ 1943              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1944 0054 0DC0A0E1 		mov	ip, sp
+ 1945              	.LCFI2:
+ 1946              		.cfi_def_cfa_register 12
+ 1947 0058 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 1948 005c 04B04CE2 		sub	fp, ip, #4
+ 1949              		.cfi_offset 14, -8
+ 1950              		.cfi_offset 13, -12
+ 1951              		.cfi_offset 11, -16
+ 1952              	.LCFI3:
+ 1953              		.cfi_def_cfa 11, 4
+ 1954 0060 08D04DE2 		sub	sp, sp, #8
+ 1955 0064 10000BE5 		str	r0, [fp, #-16]
+  18:../src/dma.c  ****     pISR_BDMA0 = (uint32)isr;
+ 1956              		.loc 1 18 0
+ 1957 0068 34309FE5 		ldr	r3, .L5
+ 1958 006c 10201BE5 		ldr	r2, [fp, #-16]
+ 1959 0070 002083E5 		str	r2, [r3, #0]
+  19:../src/dma.c  ****     I_ISPC     = BIT_BDMA0;
+ 1960              		.loc 1 19 0
+ 1961 0074 2C309FE5 		ldr	r3, .L5+4
+ 1962 0078 0228A0E3 		mov	r2, #131072
+ 1963 007c 002083E5 		str	r2, [r3, #0]
+  20:../src/dma.c  ****     INTMSK    &= ~(BIT_GLOBAL |BIT_BDMA0);
+ 1964              		.loc 1 20 0
+ 1965 0080 24209FE5 		ldr	r2, .L5+8
+ 1966 0084 20309FE5 		ldr	r3, .L5+8
+ 1967 0088 003093E5 		ldr	r3, [r3, #0]
+ 1968 008c 0133C3E3 		bic	r3, r3, #67108864
+ 1969 0090 0238C3E3 		bic	r3, r3, #131072
+ 1970 0094 003082E5 		str	r3, [r2, #0]
+  21:../src/dma.c  **** }
+ 1971              		.loc 1 21 0
+ 1972 0098 0CD04BE2 		sub	sp, fp, #12
+ 1973 009c 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 1974 00a0 1EFF2FE1 		bx	lr
+ 1975              	.L6:
+ 1976              		.align	2
+ 1977              	.L5:
+ 1978 00a4 64FF7F0C 		.word	209715044
+ 1979 00a8 2400E001 		.word	31457316
+ 1980 00ac 0C00E001 		.word	31457292
+ 1981              		.cfi_endproc
+ 1982              	.LFE1:
+ 1984              		.align	2
+ 1985              		.global	bdma0_close
+ 1987              	bdma0_close:
+ 1988              	.LFB2:
+  22:../src/dma.c  **** 
+  23:../src/dma.c  **** void bdma0_close( void )
+  24:../src/dma.c  **** {
+ 1989              		.loc 1 24 0
+ 1990              		.cfi_startproc
+ 1991              		@ Function supports interworking.
+ 1992              		@ args = 0, pretend = 0, frame = 0
+ 1993              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1994 00b0 0DC0A0E1 		mov	ip, sp
+ 1995              	.LCFI4:
+ 1996              		.cfi_def_cfa_register 12
+ 1997 00b4 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 1998 00b8 04B04CE2 		sub	fp, ip, #4
+ 1999              		.cfi_offset 14, -8
+ 2000              		.cfi_offset 13, -12
+ 2001              		.cfi_offset 11, -16
+ 2002              	.LCFI5:
+ 2003              		.cfi_def_cfa 11, 4
+  25:../src/dma.c  ****     INTMSK    |= BIT_BDMA0;
+ 2004              		.loc 1 25 0
+ 2005 00bc 24309FE5 		ldr	r3, .L8
+ 2006 00c0 20209FE5 		ldr	r2, .L8
+ 2007 00c4 002092E5 		ldr	r2, [r2, #0]
+ 2008 00c8 022882E3 		orr	r2, r2, #131072
+ 2009 00cc 002083E5 		str	r2, [r3, #0]
+  26:../src/dma.c  ****     pISR_BDMA1 = (uint32)isr_BDMA0_dummy;
+ 2010              		.loc 1 26 0
+ 2011 00d0 14309FE5 		ldr	r3, .L8+4
+ 2012 00d4 14209FE5 		ldr	r2, .L8+8
+ 2013 00d8 002083E5 		str	r2, [r3, #0]
+  27:../src/dma.c  **** }
+ 2014              		.loc 1 27 0
+ 2015 00dc 0CD04BE2 		sub	sp, fp, #12
+ 2016 00e0 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 2017 00e4 1EFF2FE1 		bx	lr
+ 2018              	.L9:
+ 2019              		.align	2
+ 2020              	.L8:
+ 2021 00e8 0C00E001 		.word	31457292
+ 2022 00ec 60FF7F0C 		.word	209715040
+ 2023 00f0 00000000 		.word	isr_BDMA0_dummy
+ 2024              		.cfi_endproc
+ 2025              	.LFE2:
+ 2027              	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 dma.c
+C:\Users\USUARI~1\AppData\Local\Temp\ccGbBl6Q.s:1885   .text:00000000 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccGbBl6Q.s:1888   .text:00000000 bdma0_init
+C:\Users\USUARI~1\AppData\Local\Temp\ccGbBl6Q.s:1928   .text:00000048 $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccGbBl6Q.s:1934   .text:00000054 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccGbBl6Q.s:1937   .text:00000054 bdma0_open
+C:\Users\USUARI~1\AppData\Local\Temp\ccGbBl6Q.s:1978   .text:000000a4 $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccGbBl6Q.s:1984   .text:000000b0 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccGbBl6Q.s:1987   .text:000000b0 bdma0_close
+C:\Users\USUARI~1\AppData\Local\Temp\ccGbBl6Q.s:2021   .text:000000e8 $d
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+isr_BDMA0_dummy
